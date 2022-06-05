@@ -1,0 +1,10 @@
+{
+  "env": "NODE_ENV",
+  "tlsRejectUnauthorized": "NODE_TLS_REJECT_UNAUTHORIZED",
+  "cosmos": {
+    "endpoint": "COSMOS_ENDPOINT",
+    "key": "COSMOS_KEY",
+    "databaseId": "COSMOS_DATABASE_ID",
+    "containerId": "COSMOS_CONTAINER_ID"
+  }
+}

@@ -1,11 +1,11 @@
 require('dotenv').config();
 
-const config = require('./config');
+const config = require('config');
 const dbContext = require('./data/databaseContext');
 const { CosmosClient } = require('@azure/cosmos');
 
 async function main() {
-  const { endpoint, key, databaseId, containerId, partitionKey } = config;
+  const { endpoint, key, databaseId, containerId, partitionKey } = config.get('cosmos');
 
   // Create the client
   const client = new CosmosClient({ endpoint, key });

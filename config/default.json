@@ -1,0 +1,9 @@
+{
+  "cosmos": {
+    "endpoint": "https://localhost:8081",
+    "key": "",
+    "databaseId": "Tasks",
+    "containerId": "Items",
+    "partitionKey": { "kind": "Hash", "paths": ["/category"] }
+  }
+}
