@@ -4,7 +4,7 @@
   "description": "Starter project based on this tutorial:",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/paulsmithkc/azure-cosmos-tutorial#readme",
   "dependencies": {
-    "@azure/cosmos": "^3.16.1"
+    "@azure/cosmos": "^3.16.1",
+    "dotenv": "^16.0.1"
   }
 }

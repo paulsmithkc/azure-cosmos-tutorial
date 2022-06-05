@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const config = require('./config');
 const dbContext = require('./data/databaseContext');
 const { CosmosClient } = require('@azure/cosmos');
@@ -19,13 +21,17 @@ async function main() {
   // Query the database for all items and display them on the console
   const querySpec = { query: 'SELECT * FROM c' };
   const query = container.items.query(querySpec);
-  for await (const item of query.getAsyncIterator()) {
+  const { resources: items } = await query.fetchAll()
+  for (const item of items) {
     console.log(`${item.id} - ${item.description}`);
   }
+  // for await (const item of query.getAsyncIterator()) {
+  //   console.log(`${item.id} - ${item.description}`);
+  // }
 
   // Create a new item
   const newItem = {
-    id: '3',
+    id: '4',
     category: 'fun',
     name: 'Cosmos DB',
     description: 'Complete Cosmos DB Node.js Quickstart ⚡',
@@ -37,9 +43,15 @@ async function main() {
   );
 
   // Update the item
+  createdItem.isComplete = true;
   const { resource: updatedItem } = await container
     .item(createdItem.id, createdItem.category)
-    .patch([{ op: 'set', path: '/isComplete', value: true }]);
+    .replace(createdItem);
+  
+  // const { resource: updatedItem } = await container
+  //   .item(createdItem.id, createdItem.category)
+  //   .patch([{ op: 'set', path: '/isComplete', value: true }]);
+
   console.log(`Updated item: ${updatedItem.id} - ${updatedItem.description}`);
   console.log(`Updated isComplete to ${updatedItem.isComplete}\n`);
 
@@ -52,4 +64,4 @@ async function main() {
 
 main()
   .then(() => console.log('Done.'))
-  .catch((err) => console.error(err));
+  .catch((err) => console.error(err.message));
