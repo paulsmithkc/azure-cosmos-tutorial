@@ -2,9 +2,9 @@
   "name": "azure-cosmos-tutorial",
   "version": "0.0.1",
   "description": "Starter project based on this tutorial:",
-  "main": "app.js",
+  "main": "app.mjs",
   "scripts": {
-    "start": "node app.js"
+    "start": "node -r dotenv/config app.mjs"
   },
   "repository": {
     "type": "git",

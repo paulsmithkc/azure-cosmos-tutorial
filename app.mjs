@@ -1,9 +1,8 @@
-require('dotenv').config();
+import config from 'config';
+import { CosmosClient } from '@azure/cosmos';
 
-const config = require('config');
-const { CosmosClient } = require('@azure/cosmos');
-
-async function main() {
+try {
+  // Get cosmos configuration
   const {
     endpoint,
     key,
@@ -76,8 +75,6 @@ async function main() {
     .item(createdItem.id, createdItem.category)
     .delete();
   console.log(`Deleted item with id: ${createdItem.id}`);
+} catch (err) {
+  console.error(err.message);
 }
-
-main()
-  .then(() => console.log('Done.'))
-  .catch((err) => console.error(err.message));
