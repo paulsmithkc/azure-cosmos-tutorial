@@ -4,6 +4,7 @@
     "key": "",
     "databaseId": "Tasks",
     "containerId": "Items",
-    "partitionKey": { "kind": "Hash", "paths": ["/category"] }
+    "partitionKey": { "kind": "Hash", "paths": ["/category"] },
+    "offerThroughput": 400
   }
 }

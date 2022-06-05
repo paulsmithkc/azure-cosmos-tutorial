@@ -1,19 +1,35 @@
 require('dotenv').config();
 
 const config = require('config');
-const dbContext = require('./data/databaseContext');
 const { CosmosClient } = require('@azure/cosmos');
 
 async function main() {
-  const { endpoint, key, databaseId, containerId, partitionKey } = config.get('cosmos');
+  const {
+    endpoint,
+    key,
+    databaseId,
+    containerId,
+    partitionKey,
+    offerThroughput,
+  } = config.get('cosmos');
 
   // Create the client
   const client = new CosmosClient({ endpoint, key });
-  const database = client.database(databaseId);
-  const container = database.container(containerId);
 
-  // Create the database and container, if they do not exist
-  await dbContext.create(client, databaseId, containerId, partitionKey);
+  // Create the database, if it does not exist
+  const { database } = await client.databases.createIfNotExists({
+    id: databaseId,
+  });
+  console.log(`Created database: ${database.id}\n`);
+
+  // Create the container, if it does not exist
+  const { container } = await client
+    .database(databaseId)
+    .containers.createIfNotExists(
+      { id: containerId, partitionKey },
+      { offerThroughput: parseInt(offerThroughput) }
+    );
+  console.log(`Created container: ${container.id}\n`);
 
   // Query items
   console.log(`Querying container: ${containerId}`);
@@ -21,7 +37,7 @@ async function main() {
   // Query the database for all items and display them on the console
   const querySpec = { query: 'SELECT * FROM c' };
   const query = container.items.query(querySpec);
-  const { resources: items } = await query.fetchAll()
+  const { resources: items } = await query.fetchAll();
   for (const item of items) {
     console.log(`${item.id} - ${item.description}`);
   }
@@ -47,7 +63,7 @@ async function main() {
   const { resource: updatedItem } = await container
     .item(createdItem.id, createdItem.category)
     .replace(createdItem);
-  
+
   // const { resource: updatedItem } = await container
   //   .item(createdItem.id, createdItem.category)
   //   .patch([{ op: 'set', path: '/isComplete', value: true }]);
