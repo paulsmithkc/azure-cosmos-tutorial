@@ -1,0 +1,30 @@
+{
+  "name": "azure-cosmos-tutorial",
+  "version": "0.0.1",
+  "description": "Starter project based on this tutorial:",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/paulsmithkc/azure-cosmos-tutorial.git"
+  },
+  "keywords": [
+    "azure",
+    "cosmos",
+    "sql",
+    "nosql",
+    "nodejs",
+    "tutorial"
+  ],
+  "author": "Paul Smith",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/paulsmithkc/azure-cosmos-tutorial/issues"
+  },
+  "homepage": "https://github.com/paulsmithkc/azure-cosmos-tutorial#readme",
+  "dependencies": {
+    "@azure/cosmos": "^3.16.1"
+  }
+}
